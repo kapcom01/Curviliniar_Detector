@@ -22,7 +22,7 @@ end
 hx=hx/sqrt(sum(sum(abs(hx).*abs(hx))));
 %generate a 2-D Gaussian kernel along y direction
 hy=hx';
-surf(hx)
+% surf(hx)
 %2-D filtering
 gx=imfilter(IM,hx,'replicate','conv');
 gy=imfilter(IM,hy,'replicate','conv');

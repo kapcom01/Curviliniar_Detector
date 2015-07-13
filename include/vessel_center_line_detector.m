@@ -13,30 +13,19 @@ function [lamdam] = vessel_center_line_detector(Image,s,line_type)
 % Returns:      lamdam - the eigenvalues that belong to perpendicular 
 %               eigenvectors with zero gradient.
 % 
-% Example:     [tri,hys]=HYSTERESIS3D(img,0.25,0.8,26)
 %
 
-% warning off
-% clear all
-% close all
 
 % open image, convert to gray scale
 I=im2double(rgb2gray(Image));
 
-% create gaussian kernel (s=sigma)
-g = fspecial('gaussian', [15 15], s);
+% % create gaussian kernel (s=sigma)
+% g = fspecial('gaussian', [15 15], s);
 
 % % 1st and 2nd order Gaussian Gradients
 % [gx, gy] = gradient(g);
 % [g2x, g2xy] = gradient(gx);
 % [g2xy, g2y] = gradient(gy);
-
-[Ix,Iy]=gaussgradient(I,s);
-[Ixx,Ixy]=gaussgradient(Ix,s);
-[Ixy,Iyy]=gaussgradient(Iy,s);
-
-% % smoothing
-% I=conv2(I,g,'same');
 
 % % 1st and second order Image Gradients(convolution with gaussian
 % % gradients)
@@ -45,6 +34,10 @@ g = fspecial('gaussian', [15 15], s);
 % Ixx=(s^2)*conv2(double(I),g2x,'same');
 % Iyy=(s^2)*conv2(double(I),g2y,'same');
 % Ixy=conv2(double(I),g2xy,'same');
+
+[Ix,Iy]=gaussgradient(I,s);
+[Ixx,Ixy]=gaussgradient(Ix,s);
+[Ixy,Iyy]=gaussgradient(Iy,s);
 
 % Calculate max eigenvalues (lamdam) of Hessian matrix [Ixx Ixy; Ixy Iyy]
 a=Ixx;b=Ixy;c=Iyy;
@@ -71,12 +64,3 @@ for y=1:size(umx,2)
         end
     end
 end
-
-% figure;imshow(Ix);title('Ix');
-% figure;imshow(Iy);title('Iy');
-% figure;imshow(Ixx);title('Ixx');
-% figure;imshow(Iyy);title('Iyy');
-% figure;imshow(Ixy);title('Ixy');
-% figure;imshow(lamdam);title('lamdam');
-% figure;imshow(t);title('t');
-% figure;imshow(J);title('J');

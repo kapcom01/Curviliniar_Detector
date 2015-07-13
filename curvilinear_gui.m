@@ -44,7 +44,7 @@ addpath('include/gaussgradient/');
 addpath('include/hysterisis/');
 
 % setup global vars
-refresh_gaussian_graph(handles, [80 80], 8);
+refresh_gaussian_graph(handles, 1);
 handles.overlay_color=[0 1 0];
 handles.line_type = -1;
 
@@ -309,10 +309,14 @@ set(handles.slider1, 'Max', max, 'Min', min);
 set(handles.slider2, 'Max', max, 'Min', min);
 
 
-function gfilt = refresh_gaussian_graph(handles, size, s)
-gfilt = fspecial('gaussian', size, s);
+function refresh_gaussian_graph(handles, s)
+epsilon=1e-2;
+halfsize=ceil(s*sqrt(-2*log(sqrt(2*pi)*s*epsilon)));
+size=2*halfsize+1;
+
+gkern = fspecial('gaussian', size, s);
 axes(handles.axes_gauss_filter);
-surf(gfilt);
+surf(gkern);
 
 
 function lamda = update_output_image(handles)
@@ -320,7 +324,7 @@ function lamda = update_output_image(handles)
 s = get(handles.slider_sigma, 'Value');
 line_type = handles.line_type;
 
-refresh_gaussian_graph(handles, [ceil(6*s) ceil(6*s)], s);
+refresh_gaussian_graph(handles, s);
 
 inputImage = getimage(handles.axes1);
 lamda = vessel_center_line_detector(inputImage,s,line_type);
