@@ -1,6 +1,8 @@
 # Curveliniar_Detector
 Curveliniar structures extraxtor. Center lines, blood vessels etc..
 
+![screenshot](/screenshot.png)
+
 # References
 [1] Guanglei Xiong (xgl99@mails.tsinghua.edu.cn) at Tsinghua University, Beijing, China. [Gradient using first order derivative of Gaussian](http://www.mathworks.com/matlabcentral/fileexchange/8060-gradient-using-first-order-derivative-of-gaussian/content/gaussgradient/gaussgradient.m)
 
